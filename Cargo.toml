@@ -6,7 +6,7 @@ description = "Easy enum wrapper that implements all traits that the wrapped obj
 homepage = "https://github.com/trangar/trait_enum"
 repository = "https://github.com/trangar/trait_enum"
 readme = "readme.md"
-license = "LICENSE_MIT"
+license = "MIT"
 
 [features]
 default = ["std"]

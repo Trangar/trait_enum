@@ -1,0 +1,11 @@
+[package]
+name = "trait_enum"
+version = "0.1.0"
+authors = ["Victor Koenders <victor.koenders@gmail.com>"]
+
+[features]
+default = ["std"]
+std = []
+
+[dependencies]
+

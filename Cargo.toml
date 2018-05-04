@@ -1,6 +1,6 @@
 [package]
 name = "trait_enum"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Victor 'Trangar' Koenders"]
 description = "Easy enum wrapper that implements all traits that the wrapped objects implement"
 homepage = "https://github.com/trangar/trait_enum"

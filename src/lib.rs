@@ -1,3 +1,5 @@
+#![deny(missing_docs)]
+
 //! An enum wrapper for types that implement the same trait
 //! 
 //! The `trait_enum` macro generates an `enum` that manages
@@ -225,10 +227,8 @@ macro_rules! __trait_enum {
                 $name($name),
             )*
         }
-        #[cfg(feature = "std")]
-        use std::ops::Deref;
-        #[cfg(not(feature = "std"))]
-        use core::ops::Deref;
+
+        use ::trait_enum::Deref;
 
         impl Deref for $EnumName {
             type Target = $Trait;
@@ -244,5 +244,16 @@ macro_rules! __trait_enum {
     };
 }
 
+#[cfg(feature = "std")]
+pub use std::ops::Deref;
+#[cfg(not(feature = "std"))]
+pub use core::ops::Deref;
+
+
 #[cfg(test)]
 pub mod test;
+
+// we need this trait_enum so that our tests succeed while running from inside this crate
+mod trait_enum {
+    pub use super::Deref;
+}

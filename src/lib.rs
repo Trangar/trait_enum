@@ -1,51 +1,51 @@
 #![deny(missing_docs)]
 
 //! An enum wrapper for types that implement the same trait
-//! 
+//!
 //! The `trait_enum` macro generates an `enum` that manages
 //! several objects.
-//! 
+//!
 //! These objects are expected to have the same trait impl
-//! 
+//!
 //! After which the enum will have a `std::ops::Deref` impl
 //! which returns a reference to that trait.
 //!
 //! ``` rust
 //! #[macro_use]
 //! extern crate trait_enum;
-//! 
+//!
 //! pub trait CommonTrait {
 //!     fn test(&self) -> u32;
 //! }
-//! 
+//!
 //! pub struct InnerOne;
 //! impl CommonTrait for InnerOne {
 //!     fn test(&self) -> u32 {
 //!         1
 //!     }
 //! }
-//! 
+//!
 //! pub struct InnerTwo;
 //! impl CommonTrait for InnerTwo {
 //!     fn test(&self) -> u32 {
 //!         2
 //!     }
 //! }
-//! 
+//!
 //! trait_enum!{
 //!     pub enum Combined: CommonTrait {
 //!         InnerOne,
 //!         InnerTwo,
 //!     }
 //! }
-//! 
+//!
 //! fn main() {
 //!     use std::ops::Deref;
-//! 
+//!
 //!     let combined = Combined::InnerOne(InnerOne);
 //!     let deref: &CommonTrait = combined.deref();
 //!     assert_eq!(deref.test(), 1);
-//! 
+//!
 //!     let combined = Combined::InnerTwo(InnerTwo);
 //!     let deref: &CommonTrait = combined.deref();
 //!     assert_eq!(deref.test(), 2);
@@ -53,51 +53,51 @@
 //! ```
 
 /// An enum wrapper for types that implement the same trait
-/// 
+///
 /// The `trait_enum` macro generates an `enum` that manages
 /// several objects.
-/// 
+///
 /// These objects are expected to have the same trait impl
-/// 
+///
 /// After which the enum will have a `std::ops::Deref` impl
 /// which returns a reference to that trait.
 ///
 /// ``` rust
 /// #[macro_use]
 /// extern crate trait_enum;
-/// 
+///
 /// pub trait CommonTrait {
 ///     fn test(&self) -> u32;
 /// }
-/// 
+///
 /// pub struct InnerOne;
 /// impl CommonTrait for InnerOne {
 ///     fn test(&self) -> u32 {
 ///         1
 ///     }
 /// }
-/// 
+///
 /// pub struct InnerTwo;
 /// impl CommonTrait for InnerTwo {
 ///     fn test(&self) -> u32 {
 ///         2
 ///     }
 /// }
-/// 
+///
 /// trait_enum!{
 ///     pub enum Combined: CommonTrait {
 ///         InnerOne,
 ///         InnerTwo,
 ///     }
 /// }
-/// 
+///
 /// fn main() {
 ///     use std::ops::Deref;
-/// 
+///
 ///     let combined = Combined::InnerOne(InnerOne);
 ///     let deref: &CommonTrait = combined.deref();
 ///     assert_eq!(deref.test(), 1);
-/// 
+///
 ///     let combined = Combined::InnerTwo(InnerTwo);
 ///     let deref: &CommonTrait = combined.deref();
 ///     assert_eq!(deref.test(), 2);
@@ -228,15 +228,23 @@ macro_rules! __trait_enum {
             )*
         }
 
-        use ::trait_enum::Deref;
-
-        impl Deref for $EnumName {
+        impl $crate::Deref for $EnumName {
             type Target = $Trait;
 
             fn deref(&self) -> &($Trait + 'static) {
-                match *self {
+                match self {
                     $(
-                        $EnumName::$name(ref v) => v as &$Trait,
+                        $EnumName::$name(v) => v as &$Trait,
+                    )*
+                }
+            }
+        }
+
+        impl $crate::DerefMut for $EnumName {
+            fn deref_mut(&mut self) -> &mut ($Trait + 'static) {
+                match self {
+                    $(
+                        $EnumName::$name(v) => v as &mut $Trait,
                     )*
                 }
             }
@@ -244,16 +252,10 @@ macro_rules! __trait_enum {
     };
 }
 
-#[cfg(feature = "std")]
-pub use std::ops::Deref;
 #[cfg(not(feature = "std"))]
-pub use core::ops::Deref;
-
+pub use core::ops::{Deref, DerefMut};
+#[cfg(feature = "std")]
+pub use std::ops::{Deref, DerefMut};
 
 #[cfg(test)]
 pub mod test;
-
-// we need this trait_enum so that our tests succeed while running from inside this crate
-mod trait_enum {
-    pub use super::Deref;
-}

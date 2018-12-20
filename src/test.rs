@@ -1,3 +1,5 @@
+use crate::*;
+
 pub trait CommonTrait {
     fn test(&self) -> u32;
 }

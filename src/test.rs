@@ -18,7 +18,7 @@ impl CommonTrait for InnerTwo {
     }
 }
 
-trait_enum!{
+trait_enum! {
     pub enum Combined: CommonTrait {
         InnerOne,
         InnerTwo

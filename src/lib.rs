@@ -139,23 +139,6 @@ macro_rules! trait_enum {
             }
         }
     };
-    (
-        $(#[$outer:meta])*
-        pub ($($vis:tt)+) struct $EnumName:ident: $Trait:tt {
-            $(
-                $name:ident,
-            )+
-        }
-    ) => {
-        __trait_enum! {
-            $(#[$outer])*
-            (pub ($($vis)+)) $EnumName: $Trait {
-                $(
-                    $name,
-                )+
-            }
-        }
-    };
 
     (
         $(#[$outer:meta])*

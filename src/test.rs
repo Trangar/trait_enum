@@ -27,7 +27,10 @@ trait_enum! {
 
 #[test]
 fn test_enum() {
-    use std::ops::Deref;
+    #[cfg(not(feature = "std"))]
+    pub use core::ops::{Deref, DerefMut};
+    #[cfg(feature = "std")]
+    pub use std::ops::{Deref, DerefMut};
 
     let combined = Combined::InnerOne(InnerOne);
     let deref: &CommonTrait = combined.deref();

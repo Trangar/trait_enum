@@ -1,4 +1,5 @@
 #![deny(missing_docs)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 //! An enum wrapper for types that implement the same trait
 //!

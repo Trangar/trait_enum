@@ -2,19 +2,30 @@ use crate::*;
 
 pub trait CommonTrait {
     fn test(&self) -> u32;
+    fn update(&mut self) -> u32;
 }
 
-pub struct InnerOne;
+pub struct InnerOne(u32);
 impl CommonTrait for InnerOne {
     fn test(&self) -> u32 {
-        1
+        self.0
+    }
+
+    fn update(&mut self) -> u32 {
+        self.0 += 1;
+        self.0
     }
 }
 
-pub struct InnerTwo;
+pub struct InnerTwo(u32);
 impl CommonTrait for InnerTwo {
     fn test(&self) -> u32 {
-        2
+        self.0
+    }
+
+    fn update(&mut self) -> u32 {
+        self.0 += 1;
+        self.0
     }
 }
 
@@ -32,11 +43,25 @@ fn test_enum() {
     #[cfg(feature = "std")]
     pub use std::ops::{Deref, DerefMut};
 
-    let combined = Combined::InnerOne(InnerOne);
-    let deref: &CommonTrait = combined.deref();
-    assert_eq!(deref.test(), 1);
+    let mut combined = Combined::InnerOne(InnerOne(1));
+    {
+        let deref: &CommonTrait = combined.deref();
+        assert_eq!(deref.test(), 1);
+    }
+    {
+        let deref_mut: &mut CommonTrait = combined.deref_mut();
+        assert_eq!(deref_mut.update(), 2);
+        assert_eq!(deref_mut.test(), 2);
+    }
 
-    let combined = Combined::InnerTwo(InnerTwo);
-    let deref: &CommonTrait = combined.deref();
-    assert_eq!(deref.test(), 2);
+    let mut combined = Combined::InnerTwo(InnerTwo(2));
+    {
+        let deref: &CommonTrait = combined.deref();
+        assert_eq!(deref.test(), 2);
+    }
+    {
+        let deref_mut: &mut CommonTrait = combined.deref_mut();
+        assert_eq!(deref_mut.update(), 3);
+        assert_eq!(deref_mut.test(), 3);
+    }
 }

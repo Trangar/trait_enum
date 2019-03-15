@@ -1,5 +1,7 @@
 # Trait Enum
 
+[![Build Status](https://travis-ci.com/Trangar/trait_enum.svg?branch=master)](https://travis-ci.com/Trangar/trait_enum)
+
 An enum wrapper for types that implement the same trait
 
 The `trait_enum` macro generates an `enum` that manages

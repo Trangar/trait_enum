@@ -110,6 +110,7 @@ macro_rules! trait_enum {
         $(#[$outer:meta])*
         pub enum $EnumName:ident: $Trait:tt {
             $(
+                $(#[$inner:meta])*
                 $name:ident,
             )+
         }
@@ -118,6 +119,7 @@ macro_rules! trait_enum {
             $(#[$outer])*
             (pub) $EnumName: $Trait {
                 $(
+                $(#[$inner])*
                     $name,
                 )+
             }
@@ -127,6 +129,7 @@ macro_rules! trait_enum {
         $(#[$outer:meta])*
         enum $EnumName:ident: $Trait:tt {
             $(
+                $(#[$inner:meta])*
                 $name:ident,
             )+
         }
@@ -135,6 +138,7 @@ macro_rules! trait_enum {
             $(#[$outer])*
             () $EnumName: $Trait {
                 $(
+                $(#[$inner])*
                     $name,
                 )+
             }
@@ -145,6 +149,7 @@ macro_rules! trait_enum {
         $(#[$outer:meta])*
         pub enum $EnumName:ident: $Trait:tt {
             $(
+                $(#[$inner:meta])*
                 $name:ident
             ),+
         }
@@ -153,6 +158,7 @@ macro_rules! trait_enum {
             $(#[$outer])*
             (pub) $EnumName: $Trait {
                 $(
+                    $(#[$inner])*
                     $name,
                 )+
             }
@@ -162,6 +168,7 @@ macro_rules! trait_enum {
         $(#[$outer:meta])*
         enum $EnumName:ident: $Trait:tt {
             $(
+                $(#[$inner:meta])*
                 $name:ident
             ),+
         }
@@ -170,6 +177,7 @@ macro_rules! trait_enum {
             $(#[$outer])*
             () $EnumName: $Trait {
                 $(
+                    $(#[$inner])*
                     $name,
                 )+
             }
@@ -179,6 +187,7 @@ macro_rules! trait_enum {
         $(#[$outer:meta])*
         pub ($($vis:tt)+) struct $EnumName:ident: $Trait:tt {
             $(
+                $(#[$inner:meta])*
                 $name:ident
             ),+
         }
@@ -187,6 +196,7 @@ macro_rules! trait_enum {
             $(#[$outer])*
             (pub ($($vis)+)) $EnumName: $Trait {
                 $(
+                $(#[$inner:meta])*
                     $name,
                 )+
             }
@@ -201,6 +211,7 @@ macro_rules! __trait_enum {
         $(#[$outer:meta])*
         ($($vis:tt)*) $EnumName:ident: $Trait:tt {
             $(
+                $(#[$inner:meta])*
                 $name:ident,
             )+
         }
@@ -208,6 +219,7 @@ macro_rules! __trait_enum {
         $(#[$outer])*
         $($vis)* enum $EnumName {
             $(
+                $(#[$inner])*
                 $name($name),
             )*
         }

@@ -115,7 +115,7 @@ macro_rules! trait_enum {
             )+
         }
     ) => {
-        __trait_enum! {
+        $crate::__trait_enum! {
             $(#[$outer])*
             (pub) $EnumName: $Trait {
                 $(
@@ -134,7 +134,7 @@ macro_rules! trait_enum {
             )+
         }
     ) => {
-        __trait_enum! {
+        $crate::__trait_enum! {
             $(#[$outer])*
             () $EnumName: $Trait {
                 $(
@@ -154,7 +154,7 @@ macro_rules! trait_enum {
             ),+
         }
     ) => {
-        __trait_enum! {
+        $crate::__trait_enum! {
             $(#[$outer])*
             (pub) $EnumName: $Trait {
                 $(
@@ -173,7 +173,7 @@ macro_rules! trait_enum {
             ),+
         }
     ) => {
-        __trait_enum! {
+        $crate::__trait_enum! {
             $(#[$outer])*
             () $EnumName: $Trait {
                 $(
@@ -192,7 +192,7 @@ macro_rules! trait_enum {
             ),+
         }
     ) => {
-        __trait_enum! {
+        $crate::__trait_enum! {
             $(#[$outer])*
             (pub ($($vis)+)) $EnumName: $Trait {
                 $(

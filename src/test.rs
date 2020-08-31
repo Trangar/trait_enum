@@ -45,22 +45,22 @@ fn test_enum() {
 
     let mut combined = Combined::InnerOne(InnerOne(1));
     {
-        let deref: &CommonTrait = combined.deref();
+        let deref: &dyn CommonTrait = combined.deref();
         assert_eq!(deref.test(), 1);
     }
     {
-        let deref_mut: &mut CommonTrait = combined.deref_mut();
+        let deref_mut: &mut dyn CommonTrait = combined.deref_mut();
         assert_eq!(deref_mut.update(), 2);
         assert_eq!(deref_mut.test(), 2);
     }
 
     let mut combined = Combined::InnerTwo(InnerTwo(2));
     {
-        let deref: &CommonTrait = combined.deref();
+        let deref: &dyn CommonTrait = combined.deref();
         assert_eq!(deref.test(), 2);
     }
     {
-        let deref_mut: &mut CommonTrait = combined.deref_mut();
+        let deref_mut: &mut dyn CommonTrait = combined.deref_mut();
         assert_eq!(deref_mut.update(), 3);
         assert_eq!(deref_mut.test(), 3);
     }

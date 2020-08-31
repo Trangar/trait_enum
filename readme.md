@@ -45,11 +45,11 @@ fn main() {
     use std::ops::Deref;
 
     let combined = Combined::InnerOne(InnerOne);
-    let deref: &CommonTrait = combined.deref();
+    let deref: &dyn CommonTrait = combined.deref();
     assert_eq!(deref.test(), 1);
 
     let combined = Combined::InnerTwo(InnerTwo);
-    let deref: &CommonTrait = combined.deref();
+    let deref: &dyn CommonTrait = combined.deref();
     assert_eq!(deref.test(), 2);
 }
 ```

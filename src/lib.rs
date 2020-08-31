@@ -96,11 +96,11 @@
 ///     use std::ops::Deref;
 ///
 ///     let combined = Combined::InnerOne(InnerOne);
-///     let deref: &CommonTrait = combined.deref();
+///     let deref: &dyn CommonTrait = combined.deref();
 ///     assert_eq!(deref.test(), 1);
 ///
 ///     let combined = Combined::InnerTwo(InnerTwo);
-///     let deref: &CommonTrait = combined.deref();
+///     let deref: &dyn CommonTrait = combined.deref();
 ///     assert_eq!(deref.test(), 2);
 /// }
 /// ```
@@ -213,22 +213,22 @@ macro_rules! __trait_enum {
         }
 
         impl $crate::Deref for $EnumName {
-            type Target = $Trait;
+            type Target = dyn $Trait;
 
-            fn deref(&self) -> &($Trait + 'static) {
+            fn deref(&self) -> &(dyn $Trait + 'static) {
                 match self {
                     $(
-                        $EnumName::$name(v) => v as &$Trait,
+                        $EnumName::$name(v) => v as &dyn $Trait,
                     )*
                 }
             }
         }
 
         impl $crate::DerefMut for $EnumName {
-            fn deref_mut(&mut self) -> &mut ($Trait + 'static) {
+            fn deref_mut(&mut self) -> &mut (dyn $Trait + 'static) {
                 match self {
                     $(
-                        $EnumName::$name(v) => v as &mut $Trait,
+                        $EnumName::$name(v) => v as &mut dyn $Trait,
                     )*
                 }
             }
